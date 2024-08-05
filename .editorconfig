@@ -1,0 +1,16 @@
+root = true
+# ktlint 가 해당 파일을 읽어서 formatting 을 해 줌
+
+[*]
+charset=utf-8
+end_of_line=lf
+indent_style=space
+indent_size=4
+insert_final_newline=true
+max_line_length=120
+trim_trailing_whitespace = true
+no-wildcard-imports=enabled
+
+[*.{kt,kts}]
+# 우리가 작성한 마지막 줄 comma 를 넣어줌 !
+ij_kotlin_allow_trailing_comma = true

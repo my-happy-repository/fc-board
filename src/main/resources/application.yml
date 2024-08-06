@@ -2,9 +2,10 @@ spring:
     application:
         name: board
     datasource:
-        url: jdbc:mysql://localhost:3307/board?useSSL=false&serverTimezone=Asis/Seoul
-        username: root
-        password: 1234
+        # url: jdbc:mysql://localhost:3307/board?useSSL=false&serverTimezone=Asis/Seoul
+        url:
+        username:
+        password:
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
@@ -12,5 +13,9 @@ spring:
         show-sql: true
         properties:
           hibernate:
+              dialect: org.hibernate.dialect.MySQLDialect
               format_sql: true
-
+#logging:
+#    level:
+#      org.hibernate: DEBUG
+#      org.springframework: DEBUG

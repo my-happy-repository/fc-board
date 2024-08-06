@@ -2,10 +2,9 @@ spring:
     application:
         name: board
     datasource:
-        # url: jdbc:mysql://localhost:3307/board?useSSL=false&serverTimezone=Asis/Seoul
-        url:
-        username:
-        password:
+        url: jdbc:mysql://localhost:3307/board?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+        username: spring-user
+        password: 1234
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:

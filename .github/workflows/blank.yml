@@ -51,3 +51,4 @@ jobs:
         environment_name: fc-env-test
         version_label: github-action-${{steps.current-time.outputs.formattedTime}}
         deployment_package: deploy/deploy.zip
+        wait_for_environment_recovery: 300

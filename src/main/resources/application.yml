@@ -3,7 +3,6 @@ spring:
         name: board
     datasource:
         url: jdbc:mysql://localhost:3307/board?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-#        AWS 는 ServerTimeZone=Seula 지원안하는 듯 .... ?!?! ===> 확인이 필요 !!
         username: spring-user
         password: 1234
         driver-class-name: com.mysql.cj.jdbc.Driver
@@ -15,6 +14,8 @@ spring:
           hibernate:
               dialect: org.hibernate.dialect.MySQLDialect
               format_sql: true
+
+#        AWS 는 ServerTimeZone=Seula 지원안하는 듯 .... ?!?! ===> 확인이 필요 !!
 #logging:
 #    level:
 #      org.hibernate: DEBUG

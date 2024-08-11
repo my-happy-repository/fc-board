@@ -6,13 +6,16 @@ import com.project.board.exception.PostNotFoundException
 import com.project.board.exception.PostNotUpdatableException
 import com.project.board.repository.PostRepository
 import com.project.board.service.dto.PostCreateRequestDto
+import com.project.board.service.dto.PostSearchRequestDto
 import com.project.board.service.dto.PostUpdateRequestDto
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldContain
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 
 @SpringBootTest
@@ -20,6 +23,25 @@ class PostServiceTest(
     private val postService: PostService,
     private val postRepository: PostRepository,
 ) : BehaviorSpec({
+
+    beforeSpec {
+        postRepository.saveAll(
+            listOf(
+                Post(title = "title1", content = "content1", createdBy = "createdBy-1"),
+                Post(title = "title2", content = "content1", createdBy = "createdBy-1"),
+                Post(title = "title3", content = "content1", createdBy = "createdBy-1"),
+                Post(title = "title4", content = "content1", createdBy = "createdBy-1"),
+                Post(title = "title5", content = "content1", createdBy = "createdBy-1"),
+                Post(title = "title6", content = "content1", createdBy = "createdBy-1"),
+                Post(title = "title7", content = "content1", createdBy = "createdBy-search"),
+                Post(title = "title8", content = "content1", createdBy = "createdBy-1"),
+                Post(title = "title-search", content = "content1", createdBy = "createdBy-1"),
+                Post(title = "title10", content = "content1", createdBy = "createdBy-1"),
+            )
+        )
+    }
+
+
 
     given(name = "게시글 생성 시") {
         When(name = "게시글 인풋이 정상적으로 들어오면") {
@@ -142,4 +164,74 @@ class PostServiceTest(
             }
         }
     }
+
+    given(name = "게시글 상세 조회 시") {
+        val savedPost = postRepository.save(
+            Post(
+                title = "title",
+                content = "content",
+                createdBy = "harris"
+            )
+        )
+
+        When(name = "정상 조회 시") {
+            val post = postService.getPost(id = savedPost.id)
+            then(name = "게시글의 내용이 정상적으로 반환됨을 확인한다.") {
+                post.id shouldBe savedPost.id
+                post.title shouldBe "title"
+                post.content shouldBe "content"
+                post.createdBy shouldBe "harris"
+            }
+        }
+
+        When(name = "게시글이 없을 때") {
+            then(name = "게시글을 찾을 수 없다는 에러가 발생한다.") {
+                shouldThrow<PostNotFoundException> {
+                    postService.getPost(id = 999L)
+                }
+            }
+        }
+    }
+
+    given(name = "게시글 목록 조회 시") {
+        When(name = "정상 조회 시") {
+            val postPage = postService.findPageBy(pageRequest = PageRequest.of(0, 5))
+            then(name = "게시글 페이지가 반환 된다.") {
+                postPage.number shouldBe 0
+
+                postPage.size shouldBe 5
+                postPage.content.size shouldBe 5
+                postPage.content[0].title shouldContain  "title"
+                postPage.content[0].createdBy shouldContain "createdBy"
+            }
+        }
+
+        // Post(title = "title-search", content = "content1", createdBy = "createdBy-1"),
+
+        When(name = "타이틀로 검색") {
+            val postPage = postService.findPageBy(pageRequest = PageRequest.of(0, 5), PostSearchRequestDto(title = "title-search"))
+
+            then(name = "타이틀에 해당하는 게시글이 반환") {
+
+                postPage.number shouldBe 0
+                postPage.size shouldBe 0
+                postPage.content.size shouldBe 5
+                postPage.content.first().title shouldContain "title"
+                postPage.content.first().createdBy shouldContain "createdBy"
+            }
+        }
+
+        When(name = "작성자로 검색") {
+            val postPage = postService.findPageBy(pageRequest = PageRequest.of(0, 5), PostSearchRequestDto(createdBy = "createdBy-search"))
+
+            then(name = "작성자에 해당하는 게시글이 반환") {
+                postPage.number shouldBe 0
+                postPage.size shouldBe 5
+                postPage.content.size shouldBe 5
+                postPage.content.first().title shouldContain "title"
+                postPage.content.first().createdBy shouldBe "createdBy-search"
+            }
+        }
+    }
 })
+

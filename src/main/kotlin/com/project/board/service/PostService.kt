@@ -1,11 +1,13 @@
 package com.project.board.service
 
+import com.project.board.controller.response.PostSummaryResponse
+import com.project.board.domain.Post
 import com.project.board.exception.PostNotDeletableException
 import com.project.board.exception.PostNotFoundException
 import com.project.board.repository.PostRepository
-import com.project.board.service.dto.PostCreateRequestDto
-import com.project.board.service.dto.PostUpdateRequestDto
-import com.project.board.service.dto.toEntity
+import com.project.board.service.dto.*
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -46,5 +48,17 @@ class PostService(
         }
         postRepository.delete(post)
         return id
+    }
+
+    fun getPost(id: Long): PostDetailResponseDto {
+        return postRepository.findByIdOrNull(id)?.toDetailResponseDto()
+            ?: throw PostNotFoundException()
+    }
+
+    fun findPageBy(
+        pageRequest: Pageable,
+        postSearchRequestDto: PostSearchRequestDto,
+    ): Page<PostSummaryResponseDto> {
+        return postRepository.findAll(pageRequest).toSummaryResponseDto()
     }
 }

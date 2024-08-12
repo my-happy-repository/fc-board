@@ -193,7 +193,10 @@ class PostServiceTest(
 
     given(name = "게시글 목록 조회 시") {
         When(name = "정상 조회 시") {
-            val postPage = postService.findPageBy(pageRequest = PageRequest.of(0, 5))
+            val postPage = postService.findPageBy(
+                pageRequest = PageRequest.of(0, 5),
+                postSearchRequestDto = PostSearchRequestDto(title = "", createdBy = "")
+            )
             then(name = "게시글 페이지가 반환 된다.") {
                 postPage.number shouldBe 0
 

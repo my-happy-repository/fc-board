@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 
 @Entity
-class Post(
+open class Post(
     createdBy: String,
     title: String,
     content: String,

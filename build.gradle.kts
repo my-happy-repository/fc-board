@@ -5,10 +5,10 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
 
-    kotlin("jvm") version "1.8.22"
-    kotlin("plugin.spring") version "1.8.22"
-    kotlin("plugin.jpa") version "1.8.22"
-    kotlin("kapt") version "1.8.22"
+    kotlin("jvm") version "1.9.10"
+    kotlin("plugin.spring") version "1.9.10"
+    kotlin("plugin.jpa") version "1.9.10"
+    kotlin("kapt") version "1.9.10"
 }
 
 group = "com.project"
@@ -31,7 +31,6 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("com.querydsl:querydsl-apt:5.0.0:jakarta")
-//    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
 
     runtimeOnly("com.mysql:mysql-connector-j")
@@ -43,17 +42,15 @@ dependencies {
     testImplementation("io.kotest.extensions:kotest-extensions-testcontainers:2.0.2")
 }
 
-sourceSets {
-    main {
-        java {
-            srcDirs("build/generated/source/kapt/main")
-        }
-    }
-}
-
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
+        jvmTarget = "17"
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
         jvmTarget = "17"
     }
 }
@@ -64,4 +61,26 @@ tasks.withType<Test> {
 
 tasks.named<Jar>("jar") {
     enabled = false
+}
+
+val generated = file("build/generated/source/kapt/main")
+
+sourceSets {
+    main {
+        kotlin.srcDir(generated)
+    }
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(
+        listOf(
+            "--add-exports", "jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED"
+        )
+    )
+}
+
+tasks.named("clean") {
+    doLast {
+        generated.deleteRecursively()
+    }
 }

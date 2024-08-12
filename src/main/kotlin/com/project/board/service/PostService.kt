@@ -1,11 +1,16 @@
 package com.project.board.service
 
-import com.project.board.controller.response.PostSummaryResponse
-import com.project.board.domain.Post
 import com.project.board.exception.PostNotDeletableException
 import com.project.board.exception.PostNotFoundException
 import com.project.board.repository.PostRepository
-import com.project.board.service.dto.*
+import com.project.board.service.dto.PostCreateRequestDto
+import com.project.board.service.dto.PostDetailResponseDto
+import com.project.board.service.dto.PostSearchRequestDto
+import com.project.board.service.dto.PostSummaryResponseDto
+import com.project.board.service.dto.PostUpdateRequestDto
+import com.project.board.service.dto.toDetailResponseDto
+import com.project.board.service.dto.toEntity
+import com.project.board.service.dto.toSummaryResponseDto
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull

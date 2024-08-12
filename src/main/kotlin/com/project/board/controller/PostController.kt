@@ -1,6 +1,10 @@
 package com.project.board.controller
 
-import com.project.board.controller.dto.*
+import com.project.board.controller.dto.PostUpdateRequest
+import com.project.board.controller.dto.PostCreateRequest
+import com.project.board.controller.dto.toDto
+import com.project.board.controller.dto.toPostUpdateRequestDto
+import com.project.board.controller.dto.PostSearchRequest
 import com.project.board.controller.response.PostDetailResponse
 import com.project.board.controller.response.PostSummaryResponse
 import com.project.board.service.PostService

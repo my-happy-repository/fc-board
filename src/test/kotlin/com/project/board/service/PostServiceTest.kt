@@ -36,12 +36,10 @@ class PostServiceTest(
                 Post(title = "title7", content = "content1", createdBy = "createdBy-search"),
                 Post(title = "title8", content = "content1", createdBy = "createdBy-1"),
                 Post(title = "title-search", content = "content1", createdBy = "createdBy-1"),
-                Post(title = "title10", content = "content1", createdBy = "createdBy-1"),
+                Post(title = "title10", content = "content1", createdBy = "createdBy-1")
             )
         )
     }
-
-
 
     given(name = "게시글 생성 시") {
         When(name = "게시글 인풋이 정상적으로 들어오면") {
@@ -201,7 +199,7 @@ class PostServiceTest(
 
                 postPage.size shouldBe 5
                 postPage.content.size shouldBe 5
-                postPage.content[0].title shouldContain  "title"
+                postPage.content[0].title shouldContain "title"
                 postPage.content[0].createdBy shouldContain "createdBy"
             }
         }
@@ -209,7 +207,10 @@ class PostServiceTest(
         // Post(title = "title-search", content = "content1", createdBy = "createdBy-1"),
 
         When(name = "타이틀로 검색") {
-            val postPage = postService.findPageBy(pageRequest = PageRequest.of(0, 5), PostSearchRequestDto(title = "title-search"))
+            val postPage = postService.findPageBy(
+                pageRequest = PageRequest.of(0, 5),
+                PostSearchRequestDto(title = "title-search")
+            )
 
             then(name = "타이틀에 해당하는 게시글이 반환") {
 
@@ -222,7 +223,10 @@ class PostServiceTest(
         }
 
         When(name = "작성자로 검색") {
-            val postPage = postService.findPageBy(pageRequest = PageRequest.of(0, 5), PostSearchRequestDto(createdBy = "createdBy-search"))
+            val postPage = postService.findPageBy(
+                pageRequest = PageRequest.of(0, 5),
+                PostSearchRequestDto(createdBy = "createdBy-search")
+            )
 
             then(name = "작성자에 해당하는 게시글이 반환") {
                 postPage.number shouldBe 0
@@ -234,4 +238,3 @@ class PostServiceTest(
         }
     }
 })
-

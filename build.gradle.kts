@@ -8,7 +8,7 @@ plugins {
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
     kotlin("plugin.jpa") version "1.8.22"
-    // kotlin("kapt") version "1.8.22"
+    kotlin("kapt") version "1.8.22"
 }
 
 group = "com.project"
@@ -31,7 +31,8 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("com.querydsl:querydsl-apt:5.0.0:jakarta")
-    // kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+//    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
 
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("com.h2database:h2")
@@ -40,6 +41,14 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
     testImplementation("io.kotest.extensions:kotest-extensions-testcontainers:2.0.2")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs("build/generated/source/kapt/main")
+        }
+    }
 }
 
 tasks.withType<KotlinCompile> {

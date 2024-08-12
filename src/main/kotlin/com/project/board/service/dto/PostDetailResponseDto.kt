@@ -17,6 +17,6 @@ fun Post.toDetailResponseDto(): PostDetailResponseDto {
         title = title,
         content = content,
         createdBy = createdBy,
-        createdAt = createdAt,
+        createdAt = createdAt
     )
 }

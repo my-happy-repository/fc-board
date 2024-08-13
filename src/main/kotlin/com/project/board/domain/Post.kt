@@ -1,5 +1,6 @@
 package com.project.board.domain
 
+import com.project.board.config.AllOpen
 import com.project.board.exception.PostNotUpdatableException
 import com.project.board.service.dto.PostUpdateRequestDto
 import jakarta.persistence.Entity
@@ -7,6 +8,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 
+@AllOpen
 @Entity
 open class Post(
     createdBy: String,

@@ -1,6 +1,7 @@
 package com.project.board.repository
 
 import com.project.board.domain.Post
+import com.project.board.domain.QPost.post
 import com.project.board.service.dto.PostSearchRequestDto
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -17,6 +18,12 @@ interface CustomPostRepository {
 class CustomPostRepositoryImpl : CustomPostRepository, QuerydslRepositorySupport(Post::class.java) {
 
     override fun findPageBy(pageRequest: Pageable, postSearchRequestDto: PostSearchRequestDto): Page<Post> {
+        // TODO - QPost 사용 하기 !
+        from(post)
+            .where(
+
+            )
+
         return Page.empty()
     }
 }

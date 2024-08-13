@@ -207,12 +207,13 @@ class PostServiceTest(
             }
         }
 
+        // TODO - 테스트가 진행이 안됨 확인이 필요 !
         // Post(title = "title-search", content = "content1", createdBy = "createdBy-1"),
 
         When(name = "타이틀로 검색") {
             val postPage = postService.findPageBy(
                 pageRequest = PageRequest.of(0, 5),
-                PostSearchRequestDto(title = "title-search")
+                postSearchRequestDto = PostSearchRequestDto(title = "title-search")
             )
 
             then(name = "타이틀에 해당하는 게시글이 반환") {
@@ -228,7 +229,7 @@ class PostServiceTest(
         When(name = "작성자로 검색") {
             val postPage = postService.findPageBy(
                 pageRequest = PageRequest.of(0, 5),
-                PostSearchRequestDto(createdBy = "createdBy-search")
+                postSearchRequestDto = PostSearchRequestDto(createdBy = "createdBy-search")
             )
 
             then(name = "작성자에 해당하는 게시글이 반환") {

@@ -64,6 +64,9 @@ class PostService(
         pageRequest: Pageable,
         postSearchRequestDto: PostSearchRequestDto,
     ): Page<PostSummaryResponseDto> {
-        return postRepository.findAll(pageRequest).toSummaryResponseDto()
+        return postRepository.findPageBy(
+            pageRequest = pageRequest,
+            postSearchRequestDto = postSearchRequestDto,
+        ).toSummaryResponseDto()
     }
 }

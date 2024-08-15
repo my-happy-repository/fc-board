@@ -1,5 +1,6 @@
 package com.project.board.controller.response
 
+import com.project.board.controller.dto.CommentResponse
 import com.project.board.service.dto.PostDetailResponseDto
 import java.time.LocalDateTime
 
@@ -9,6 +10,7 @@ data class PostDetailResponse(
     val content: String,
     val createdBy: String,
     val createdAt: LocalDateTime,
+    val comments: List<CommentResponse> = emptyList(),
 )
 
 fun PostDetailResponseDto.toResponse(): PostDetailResponse =

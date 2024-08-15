@@ -66,7 +66,7 @@ class PostService(
     ): Page<PostSummaryResponseDto> {
         return postRepository.findPageBy(
             pageRequest = pageRequest,
-            postSearchRequestDto = postSearchRequestDto,
+            postSearchRequestDto = postSearchRequestDto
         ).toSummaryResponseDto()
     }
 }

@@ -1,5 +1,6 @@
 package com.project.board.controller.response
 
+import com.project.board.service.dto.PostDetailResponseDto
 import java.time.LocalDateTime
 
 data class PostDetailResponse(
@@ -9,3 +10,12 @@ data class PostDetailResponse(
     val createdBy: String,
     val createdAt: LocalDateTime,
 )
+
+fun PostDetailResponseDto.toResponse(): PostDetailResponse =
+    PostDetailResponse(
+        id = id,
+        title = title,
+        content = content,
+        createdBy = createdBy,
+        createdAt = createdAt
+    )

@@ -4,9 +4,12 @@ import com.project.board.controller.dto.PostCreateRequest
 import com.project.board.controller.dto.PostSearchRequest
 import com.project.board.controller.dto.PostUpdateRequest
 import com.project.board.controller.dto.toDto
+import com.project.board.controller.dto.toPostSearchRequestDto
 import com.project.board.controller.dto.toPostUpdateRequestDto
 import com.project.board.controller.response.PostDetailResponse
 import com.project.board.controller.response.PostSummaryResponse
+import com.project.board.controller.response.toResponse
+import com.project.board.controller.response.toSummaryResponse
 import com.project.board.service.PostService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.time.LocalDateTime
 
 @RestController
 class PostController(
@@ -52,13 +54,7 @@ class PostController(
     fun getPost(
         @PathVariable(name = "id") id: Long,
     ): PostDetailResponse {
-        return PostDetailResponse(
-            id = 1L,
-            title = "title",
-            content = "content",
-            createdBy = "createdBy",
-            createdAt = LocalDateTime.now()
-        )
+        return postService.getPost(id = id).toResponse()
     }
 
     @GetMapping("/posts")
@@ -66,9 +62,9 @@ class PostController(
         pageable: Pageable, // Pageable 인터페이스 사용 시 페이지 정보 자동으로 맵핑을 해 줌
         postSearchRequest: PostSearchRequest,
     ): Page<PostSummaryResponse> {
-        println("Title ${postSearchRequest.title}")
-        println("CreatedBy ${postSearchRequest.createdBy}")
-
-        return Page.empty()
+        return postService.findPageBy(
+            pageRequest = pageable,
+            postSearchRequestDto = postSearchRequest.toPostSearchRequestDto()
+        ).toSummaryResponse()
     }
 }

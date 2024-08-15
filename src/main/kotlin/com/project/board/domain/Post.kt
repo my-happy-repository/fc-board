@@ -21,12 +21,12 @@ open class Post(
     // Id 전략 중 GenerationType.IDENTITY 는 DB 에서 값을 생성 해 줌
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0
+    open val id: Long = 0
 
-    var title: String = title
+    open var title: String = title
         protected set
 
-    var content: String = content
+    open var content: String = content
         protected set
 
     fun update(postUpdateRequestDto: PostUpdateRequestDto) {

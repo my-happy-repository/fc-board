@@ -10,15 +10,15 @@ import java.time.LocalDateTime
 abstract class BaseEntity(
     createdBy: String,
 ) {
-    val createdBy: String = createdBy
+    open val createdBy: String = createdBy
 
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    open val createdAt: LocalDateTime = LocalDateTime.now()
 
     // protect set 을 해주는 이유는 외부 클래스에서 값을 변경하지 못하게 함
-    var updatedBy: String? = null
+    open var updatedBy: String? = null
         protected set
 
-    var updatedAt: LocalDateTime? = null
+    open var updatedAt: LocalDateTime? = null
         protected set
 
     fun update(updatedBy: String) {

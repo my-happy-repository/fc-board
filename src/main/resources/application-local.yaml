@@ -15,8 +15,13 @@ spring:
                 dialect: org.hibernate.dialect.MySQLDialect
                 format_sql: true
 
+
 #        AWS 는 ServerTimeZone=Seula 지원안하는 듯 .... ?!?! ===> 확인이 필요 !!
 #logging:
 #    level:
 #      org.hibernate: DEBUG
 #      org.springframework: DEBUG
+## TODO - 테스트 후 해당 설정 프로퍼티 지우기 ... !!!
+server:
+    tomcat:
+        connection-timeout: 10

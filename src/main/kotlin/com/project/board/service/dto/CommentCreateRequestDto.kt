@@ -8,4 +8,8 @@ data class CommentCreateRequestDto(
     val createdBy: String,
 )
 
-fun CommentCreateRequestDto.toEntity(post: Post) = Comment(post = post, content = this.content, createdBy = this.createdBy)
+fun CommentCreateRequestDto.toEntity(post: Post) = Comment(
+    post = post,
+    content = this.content,
+    createdBy = this.createdBy
+)

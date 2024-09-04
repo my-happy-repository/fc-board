@@ -1,6 +1,8 @@
 package com.project.board.domain
 
 import com.project.board.config.AllOpen
+import com.project.board.exception.CommentNotUpdatableException
+import com.project.board.service.dto.CommentUpdateRequestDto
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
@@ -15,6 +17,15 @@ open class Comment(
     post: Post,
     createdBy: String,
 ) : BaseEntity(createdBy = createdBy) {
+
+    fun update(updateRequestDto: CommentUpdateRequestDto) {
+        if (updateRequestDto.updatedBy != this.createdBy) {
+            throw CommentNotUpdatableException()
+        }
+
+        this.content = updateRequestDto.content
+        super.updatedBy = updateRequestDto.updatedBy
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

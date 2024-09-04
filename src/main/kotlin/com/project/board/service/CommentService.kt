@@ -1,6 +1,5 @@
 package com.project.board.service
 
-import com.project.board.domain.QComment.comment
 import com.project.board.exception.CommentNotDeletableException
 import com.project.board.exception.CommentNotFoundException
 import com.project.board.exception.PostNotFoundException

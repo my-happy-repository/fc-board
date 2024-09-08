@@ -1,9 +1,11 @@
 package com.project.board.service
 
+import com.project.board.domain.Comment
 import com.project.board.domain.Post
 import com.project.board.exception.PostNotDeletableException
 import com.project.board.exception.PostNotFoundException
 import com.project.board.exception.PostNotUpdatableException
+import com.project.board.repository.CommentRepository
 import com.project.board.repository.PostRepository
 import com.project.board.service.dto.PostCreateRequestDto
 import com.project.board.service.dto.PostSearchRequestDto
@@ -22,8 +24,8 @@ import org.springframework.data.repository.findByIdOrNull
 class PostServiceTest(
     private val postService: PostService,
     private val postRepository: PostRepository,
+    private val commentRepository: CommentRepository,
 ) : BehaviorSpec({
-
     beforeSpec {
         postRepository.saveAll(
             listOf(
@@ -189,8 +191,29 @@ class PostServiceTest(
                 }
             }
         }
+
+        When(name = "댓글 추가 시") {
+            commentRepository.save(Comment(content = "댓글 내용 1", post = savedPost, createdBy = "댓글 작성자 1"))
+            commentRepository.save(Comment(content = "댓글 내용 2", post = savedPost, createdBy = "댓글 작성자 2"))
+            commentRepository.save(Comment(content = "댓글 내용 3", post = savedPost, createdBy = "댓글 작성자 3"))
+
+            then(name = "댓글이 정상 조회 됨을 확인한다") {
+                val post = postService.getPost(savedPost.id)
+
+                post.comments.size shouldBe 3
+                post.comments[0].content shouldBe "댓글 내용 1"
+                post.comments[1].content shouldBe "댓글 내용 2"
+                post.comments[2].content shouldBe "댓글 내용 3"
+
+                post.comments[0].createdBy shouldBe "댓글 작성자 1"
+                post.comments[1].createdBy shouldBe "댓글 작성자 2"
+                post.comments[2].createdBy shouldBe "댓글 작성자 3"
+            }
+        }
     }
 
+    // TODO - 해당 아래 부터 테스트 실패함 확인이 필요 !!
+    // 테스트 통과 하도록 수정 해 주기 !!!
     given(name = "게시글 목록 조회 시") {
         When(name = "정상 조회 시") {
             val postPage = postService.findPageBy(

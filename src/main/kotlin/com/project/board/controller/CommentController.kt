@@ -35,7 +35,7 @@ class CommentController(
     ): Long {
         return commentService.updateComment(
             commentId = commentId,
-            commentUpdateRequestDto = commentUpdateRequest.toDto(),
+            commentUpdateRequestDto = commentUpdateRequest.toDto()
         )
     }
 
@@ -46,7 +46,7 @@ class CommentController(
     ): Long {
         return commentService.deleteComment(
             commentId = commentId,
-            commentDeleteRequestDto = CommentDeleteRequestDto(deletedBy = deletedBy),
+            commentDeleteRequestDto = CommentDeleteRequestDto(deletedBy = deletedBy)
         )
     }
 }

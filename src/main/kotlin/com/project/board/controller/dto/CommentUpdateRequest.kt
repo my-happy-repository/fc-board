@@ -9,5 +9,5 @@ data class CommentUpdateRequest(
 
 fun CommentUpdateRequest.toDto() = CommentUpdateRequestDto(
     content = this.content,
-    updatedBy = this.updatedBy,
+    updatedBy = this.updatedBy
 )

@@ -3,6 +3,7 @@ package com.project.board.service
 import com.project.board.domain.Post
 import com.project.board.exception.CommentNotDeletableException
 import com.project.board.exception.CommentNotFoundException
+import com.project.board.exception.CommentNotUpdatableException
 import com.project.board.exception.PostNotFoundException
 import com.project.board.repository.CommentRepository
 import com.project.board.repository.PostRepository
@@ -114,6 +115,20 @@ class CommentServiceTest(
                         commentUpdateRequestDto = CommentUpdateRequestDto(
                             content = "내용 수정 테스트 입니다.",
                             updatedBy = "댓글 작성자"
+                        )
+                    )
+                }
+            }
+        }
+
+        When(name = "업데이트 하려는 사용자와 작성자가 다르면") {
+            then(name = "에러가 발생하여야 합니다.") {
+                shouldThrow<CommentNotUpdatableException> {
+                    commentService.updateComment(
+                        commentId = commentId,
+                        commentUpdateRequestDto = CommentUpdateRequestDto(
+                            content = "댓글 내용 수정 테스트 입니다.",
+                            updatedBy = "댓글 작성자가 아닙니다."
                         )
                     )
                 }

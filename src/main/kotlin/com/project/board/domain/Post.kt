@@ -32,9 +32,8 @@ open class Post(
 
     // TODO - OneToMany / ManyToOne 숙지 하기 !
     @OneToMany(mappedBy = "post", orphanRemoval = true, cascade = [CascadeType.ALL])
-    var comments: MutableList<Comment> = mutableListOf()
+    open var comments: MutableList<Comment> = mutableListOf()
         protected set
-
 
     fun update(postUpdateRequestDto: PostUpdateRequestDto) {
         // Update 하려는 작성자와 게시글 작성자가 동일하지 않을 시 예외가 발생 !

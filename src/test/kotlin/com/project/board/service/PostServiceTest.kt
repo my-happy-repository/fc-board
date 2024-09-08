@@ -213,7 +213,7 @@ class PostServiceTest(
         When(name = "타이틀로 검색") {
             val postPage = postService.findPageBy(
                 pageRequest = PageRequest.of(0, 5),
-                postSearchRequestDto = PostSearchRequestDto(title = "title-search")
+                postSearchRequestDto = PostSearchRequestDto(title = "title-search", createdBy = "")
             )
 
             then(name = "타이틀에 해당하는 게시글이 반환") {
@@ -229,7 +229,7 @@ class PostServiceTest(
         When(name = "작성자로 검색") {
             val postPage = postService.findPageBy(
                 pageRequest = PageRequest.of(0, 5),
-                postSearchRequestDto = PostSearchRequestDto(createdBy = "createdBy-search")
+                postSearchRequestDto = PostSearchRequestDto(title = "", createdBy = "createdBy-search")
             )
 
             then(name = "작성자에 해당하는 게시글이 반환") {

@@ -2,6 +2,9 @@ package com.project.board.controller
 
 import com.project.board.controller.dto.CommentCreateRequest
 import com.project.board.controller.dto.CommentUpdateRequest
+import com.project.board.controller.dto.toDto
+import com.project.board.service.CommentService
+import com.project.board.service.dto.CommentDeleteRequestDto
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -11,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class CommentController {
-
+class CommentController(
+    private val commentService: CommentService,
+) {
     @PostMapping("/posts/{postId}/comments")
     fun createComments(
         @PathVariable(name = "postId") postId: Long,
         @RequestBody commentCreateRequest: CommentCreateRequest,
     ): Long {
-        return 1L
+        return commentService.createComment(
+            postId = postId,
+            commentCreateRequestDto = CommentCreateRequest.toCommentCreateRequestDto(dto = commentCreateRequest)
+        )
     }
 
     @PutMapping("/comments/{commentId}")
@@ -26,9 +33,10 @@ class CommentController {
         @PathVariable(name = "commentId") commentId: Long,
         @RequestBody commentUpdateRequest: CommentUpdateRequest,
     ): Long {
-        Thread.sleep(70000)
-
-        return commentId
+        return commentService.updateComment(
+            commentId = commentId,
+            commentUpdateRequestDto = commentUpdateRequest.toDto()
+        )
     }
 
     @DeleteMapping("/comments/{commentId}")
@@ -36,6 +44,9 @@ class CommentController {
         @PathVariable(name = "commentId") commentId: Long,
         @RequestParam deletedBy: String,
     ): Long {
-        return commentId
+        return commentService.deleteComment(
+            commentId = commentId,
+            commentDeleteRequestDto = CommentDeleteRequestDto(deletedBy = deletedBy)
+        )
     }
 }

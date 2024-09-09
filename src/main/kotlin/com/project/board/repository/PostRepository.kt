@@ -21,6 +21,7 @@ class CustomPostRepositoryImpl : CustomPostRepository, QuerydslRepositorySupport
 
     override fun findPageBy(pageRequest: Pageable, postSearchRequestDto: PostSearchRequestDto): Page<Post> {
         // TODO - 에러가 발생 .... 확인이 필요 !
+        // java.lang.ClassNotFoundException: javax.persistence.NoResultException 해당 에러가 발생 확인이 필요 !
         val result =
             from(QPost.post)
                 .where(

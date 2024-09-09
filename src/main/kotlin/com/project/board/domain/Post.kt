@@ -16,6 +16,7 @@ open class Post(
     createdBy: String,
     title: String,
     content: String,
+    tags: List<String> = emptyList(),
 ) : BaseEntity(
     createdBy = createdBy
 ) {
@@ -33,6 +34,10 @@ open class Post(
     // TODO - OneToMany / ManyToOne 숙지 하기 !
     @OneToMany(mappedBy = "post", orphanRemoval = true, cascade = [CascadeType.ALL])
     open var comments: MutableList<Comment> = mutableListOf()
+        protected set
+
+    @OneToMany(mappedBy = "post", orphanRemoval = true, cascade = [CascadeType.ALL])
+    open var tags: MutableSet<Tag> = tags.map { Tag(it, this, createdBy) }.toMutableSet()
         protected set
 
     fun update(postUpdateRequestDto: PostUpdateRequestDto) {

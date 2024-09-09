@@ -10,6 +10,7 @@ data class PostSummaryResponse(
     val title: String,
     val createdBy: String,
     val createdAt: LocalDateTime,
+    val tag: String? = null
 )
 
 fun Page<PostSummaryResponseDto>.toSummaryResponse() =

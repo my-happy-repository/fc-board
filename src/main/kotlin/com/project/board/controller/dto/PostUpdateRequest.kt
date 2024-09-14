@@ -6,13 +6,14 @@ data class PostUpdateRequest(
     val title: String,
     val content: String,
     val updatedBy: String,
-    val tags: List<String>,
+    val tags: List<String> = emptyList(),
 )
 
 fun PostUpdateRequest.toPostUpdateRequestDto(): PostUpdateRequestDto {
     return PostUpdateRequestDto(
         title = this.title,
         content = this.content,
-        updatedBy = this.updatedBy
+        updatedBy = this.updatedBy,
+        tags = this.tags
     )
 }

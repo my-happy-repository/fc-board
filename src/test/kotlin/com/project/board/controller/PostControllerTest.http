@@ -16,7 +16,7 @@ Content-Type: application/json
 {
     "title" : "title-1",
     "content": "content-1",
-    "updatedBy": "createdBy-1",
+    "updatedBy": "createdBy",
     "tags" : ["tag1", "tag2"]
 }
 
@@ -27,7 +27,7 @@ DELETE /localhost:8080/posts/1?createdBy=harris
 GET /localhost:8080/posts/2
 
 ### 게시글 목록 조회
-GET /localhost:8080/posts?page=0&size=10&title=title&createdBy=createdBy
+GET /localhost:8080/posts?page=0&size=10&title=sdsd&createdBy=gasd
 
 ### 태그 목록 조회
 GET /localhost:8080/posts/

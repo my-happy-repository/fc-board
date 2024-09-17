@@ -13,6 +13,7 @@ data class PostDetailResponse(
     val createdAt: LocalDateTime,
     val comments: List<CommentResponse>,
     val tags: List<String> = emptyList(),
+    val likeCount: Long = 0,
 )
 
 fun PostDetailResponseDto.toResponse(): PostDetailResponse =

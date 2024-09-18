@@ -36,6 +36,7 @@ class LikeServiceTest(
                 like?.createdBy shouldBe "created-test"
             }
         }
+
         When(name = "게시글이 존재하지 않으면") {
             then(name = "존재하지 않는 게시글 에러가 발생한다/") {
                 shouldThrow<PostNotFoundException> {

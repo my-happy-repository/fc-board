@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true) // TODO - Transactional 어노테이션 왜 붙이는 지 확인이 필요 .... !!!
 class PostService(
     private val postRepository: PostRepository,
+    private val likeService: LikeService,
 ) {
 
     // Transactional Class 단위는 ReadOnly 함수단위는 ReadOnly 를 빼 줌, Create 할 때는 ReadOnly 를 뺴주어야 함 !
@@ -56,7 +57,9 @@ class PostService(
     }
 
     fun getPost(id: Long): PostDetailResponseDto {
-        return postRepository.findByIdOrNull(id)?.toDetailResponseDto()
+        val likeCount = likeService.countLike(postId = id)
+
+        return postRepository.findByIdOrNull(id)?.toDetailResponseDto(likeCount = likeCount)
             ?: throw PostNotFoundException()
     }
 
@@ -67,6 +70,9 @@ class PostService(
         return postRepository.findPageBy(
             pageRequest = pageRequest,
             postSearchRequestDto = postSearchRequestDto
-        ).toSummaryResponseDto()
+        ).toSummaryResponseDto(
+            // 람다를 넘겨 줌 (좋아요 카운트는 LikeService 함수에 의존하게 됨)
+            likeService::countLike
+        )
     }
 }

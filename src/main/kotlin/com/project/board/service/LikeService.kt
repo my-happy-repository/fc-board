@@ -25,4 +25,8 @@ class LikeService(
             )
         ).id
     }
+
+    fun countLike(postId: Long): Long {
+        return likeRepository.countByPostId(postId = postId)
+    }
 }

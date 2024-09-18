@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.RequestParam
 
 data class PostSearchRequest(
     @RequestParam(name = "title")
-    val title: String,
+    val title: String?,
     @RequestParam(name = "createdBy")
-    val createdBy: String,
+    val createdBy: String?,
     @RequestParam(name = "tag")
     val tag: String?,
 )
@@ -15,5 +15,6 @@ data class PostSearchRequest(
 fun PostSearchRequest.toPostSearchRequestDto(): PostSearchRequestDto =
     PostSearchRequestDto(
         title = title,
-        createdBy = createdBy
+        createdBy = createdBy,
+        tag = tag
     )

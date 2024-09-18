@@ -3,6 +3,7 @@ package com.project.board.service
 import com.project.board.exception.PostNotDeletableException
 import com.project.board.exception.PostNotFoundException
 import com.project.board.repository.PostRepository
+import com.project.board.repository.TagRepository
 import com.project.board.service.dto.PostCreateRequestDto
 import com.project.board.service.dto.PostDetailResponseDto
 import com.project.board.service.dto.PostSearchRequestDto
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional
 class PostService(
     private val postRepository: PostRepository,
     private val likeService: LikeService,
+    private val tagRepository: TagRepository,
 ) {
 
     // Transactional Class 단위는 ReadOnly 함수단위는 ReadOnly 를 빼 줌, Create 할 때는 ReadOnly 를 뺴주어야 함 !
@@ -67,6 +69,10 @@ class PostService(
         pageRequest: Pageable,
         postSearchRequestDto: PostSearchRequestDto,
     ): Page<PostSummaryResponseDto> {
+        postSearchRequestDto.tag?.let {
+            return tagRepository.findPageBy(pageRequest, it).toSummaryResponseDto(likeService::countLike)
+        }
+
         return postRepository.findPageBy(
             pageRequest = pageRequest,
             postSearchRequestDto = postSearchRequestDto

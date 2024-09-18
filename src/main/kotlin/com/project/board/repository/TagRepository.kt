@@ -1,5 +1,6 @@
 package com.project.board.repository
 
+import com.project.board.domain.QPost.post
 import com.project.board.domain.QTag.tag
 import com.project.board.domain.Tag
 import org.springframework.data.domain.Page
@@ -24,7 +25,8 @@ class CustomTagRepositoryImpl : CustomTagRepository, QuerydslRepositorySupport(T
     override fun findPageBy(pageRequest: Pageable, tagName: String): Page<Tag> {
        return from(tag)
            // N+1 문제 해결을 위하여 join 을 직접 해 줌 !
-           .join(tag.post()).fetchJoin()
+           // Join 시 Post 를 같이 Join 해주었음 (뒤 post 지우면 join query 가 2번 나감 .. 원인은 확인해 보기 !)
+           .join(tag.post(), post).fetchJoin()
            .where(tag.name.eq(tagName))
            .orderBy(tag.post().createdBy.desc())
            .offset(pageRequest.offset)

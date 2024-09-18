@@ -41,3 +41,32 @@
 #### 동시성 처리 -> Thread, CompletableFuture, Coroutine, 스케일링, JVM (GC) 튜닝
 
 ### N+1 문제 -> 특정 엔티티를 DB 에서 조회할 때 나가는 1번의 쿼리 + 연관 객체를 조회하는 N 번의 예상치 못한 쿼리
+
+### Database Index
+#### 책의 색인 (페이지 주소) : 책의 내용, 인덱스 (데이터 주소) : 데이터
+#### 장점 : 검색 속도를 증가 시킴, 단점 : Insert / Update / Delete 가 느려짐, 인덱스의 정렬 된 순서를 유지 시키는 비용
+
+#### 인덱스 생성 방식
+#### 1. 쿼리 실행 계획을 확인, 2. 인덱스 추가, 3 쿼리 실행 계획 변경 확인
+
+### INDEX 를 생성하기 전에는 해당 쿼리는 type 이 ALL 이 였음
+`EXPLAIN
+SELECT count(l1_0.id)
+FROM likes l1_0
+WHERE l1_0.post_id = 1;`
+
+### INDEX 를 생성 후 type 이 ref 로 변경이 됨
+`CREATE INDEX idx_post_id on likes(post_id);`
+
+
+
+
+
+
+
+
+
+
+
+
+

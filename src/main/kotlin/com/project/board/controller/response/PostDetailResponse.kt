@@ -1,7 +1,5 @@
 package com.project.board.controller.response
 
-import com.project.board.controller.dto.CommentResponse
-import com.project.board.controller.dto.toResponse
 import com.project.board.service.dto.PostDetailResponseDto
 import java.time.LocalDateTime
 

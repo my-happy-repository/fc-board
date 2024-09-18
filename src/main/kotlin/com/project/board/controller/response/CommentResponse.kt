@@ -1,4 +1,4 @@
-package com.project.board.controller.dto
+package com.project.board.controller.response
 
 import com.project.board.service.dto.CommentResponseDto
 import java.time.LocalDateTime

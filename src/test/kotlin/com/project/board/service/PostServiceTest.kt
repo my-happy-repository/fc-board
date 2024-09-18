@@ -236,17 +236,17 @@ class PostServiceTest(
             Post(
                 title = "title",
                 content = "content",
-                createdBy = "harris"
+                createdBy = "create-test"
             )
         )
 
         tagRepository.saveAll(
             listOf(
-                Tag(name = "tag1", post = savedPost, createdBy = "harris"),
-                Tag(name = "tag2", post = savedPost, createdBy = "harris"),
-                Tag(name = "tag3", post = savedPost, createdBy = "harris"),
-                Tag(name = "tag4", post = savedPost, createdBy = "harris"),
-                Tag(name = "tag5", post = savedPost, createdBy = "harris")
+                Tag(name = "tag1", post = savedPost, createdBy = "create-test"),
+                Tag(name = "tag2", post = savedPost, createdBy = "create-test"),
+                Tag(name = "tag3", post = savedPost, createdBy = "create-test"),
+                Tag(name = "tag4", post = savedPost, createdBy = "create-test"),
+                Tag(name = "tag5", post = savedPost, createdBy = "create-test")
             )
         )
 
@@ -258,14 +258,16 @@ class PostServiceTest(
             val post = postService.getPost(id = savedPost.id)
             then(name = "게시글의 내용이 정상적으로 반환됨을 확인한다.") {
                 post.id shouldBe savedPost.id
+
                 post.title shouldBe "title"
                 post.content shouldBe "content"
-                post.createdBy shouldBe "harris"
+                post.createdBy shouldBe "create-test"
             }
 
             then(name = "태그가 정상적으로 조회가 된다") {
                 post.tags.size shouldBe 5
 
+                // TODO - 데이터 조회 순서 확인이 필요 !
                 post.tags[0] shouldBe "tag1"
                 post.tags[1] shouldBe "tag2"
                 post.tags[2] shouldBe "tag3"

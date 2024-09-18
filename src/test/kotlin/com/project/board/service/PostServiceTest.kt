@@ -93,7 +93,7 @@ class PostServiceTest(
         }
     }
 
-    given(name = "게시글 수정 시") {
+    given("게시글 수정 시") {
         // 게시글 수정을 하기 위하여서는 게시글이 미리 생성 되어 있어여 한다.
         val saved = postRepository.save(
             Post(
@@ -104,7 +104,7 @@ class PostServiceTest(
             )
         )
 
-        When(name = "정상 수정 시") {
+        When("정상 수정 시") {
             val updatedId =
                 postService.updatePost(
                     id = saved.id,
@@ -115,7 +115,7 @@ class PostServiceTest(
                     )
                 )
 
-            then(name = "게시글이 정상적으로 수정 됨을 확인한다.") {
+            then("게시글이 정상적으로 수정 됨을 확인한다.") {
                 saved.id shouldBe updatedId
                 val updated = postRepository.findByIdOrNull(id = updatedId)
 
@@ -127,8 +127,8 @@ class PostServiceTest(
             }
         }
 
-        When(name = "게시글이 없을 때") {
-            then(name = "게시글이 찾을 수 없다는 오류가 발생") {
+        When("게시글이 없을 때") {
+            then("게시글이 찾을 수 없다는 오류가 발생") {
                 shouldThrow<PostNotFoundException> {
                     postService.updatePost(
                         id = 999L,
@@ -142,8 +142,8 @@ class PostServiceTest(
             }
         }
 
-        When(name = "작성자가 동일하지 않으면") {
-            then(name = "수정할 수 없는 게시물 입니다. 예외가 발생한다.") {
+        When("작성자가 동일하지 않으면") {
+            then("수정할 수 없는 게시물 입니다. 예외가 발생한다.") {
                 shouldThrow<PostNotUpdatableException> {
                     postService.updatePost(
                         id = 1L,
@@ -157,7 +157,7 @@ class PostServiceTest(
             }
         }
 
-        When(name = "태그가 수정되었을 때") {
+        When("태그가 수정되었을 때") {
             val updatedId =
                 postService.updatePost(
                     id = saved.id,
@@ -169,14 +169,14 @@ class PostServiceTest(
                     )
                 )
 
-            then(name = "정상적으로 수정 됨을 확인한다.") {
+            then("정상적으로 수정 됨을 확인한다.") {
                 val tags = tagRepository.findByPostId(postId = updatedId)
 
                 tags.size shouldBe 3
                 tags[2].name shouldBe "tag3"
             }
 
-            then(name = "태그 순서가 변경 되었을 때 정상적으로 변경 됨을 확인한다.") {
+            then("태그 순서가 변경 되었을 때 정상적으로 변경 됨을 확인한다.") {
                 postService.updatePost(
                     id = saved.id,
                     requestDto =
@@ -223,7 +223,7 @@ class PostServiceTest(
                 )
             )
 
-            then(name = "삭제 할 수 없는 게시물 입니다. 예외가 발생한다.") {
+            then("삭제 할 수 없는 게시물 입니다. 예외가 발생한다.") {
                 shouldThrow<PostNotDeletableException> {
                     postService.deletePost(id = savedPost2.id, createdBy = "harris2")
                 }

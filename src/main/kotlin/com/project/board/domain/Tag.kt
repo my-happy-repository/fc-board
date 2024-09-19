@@ -24,7 +24,7 @@ open class Tag(
         protected set // protected set 으로 외부 수정 불가 하도록 함
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = ForeignKey(ConstraintMode.NO_CONSTRAINT))  // 조인 테이블 제약 조건을 설정 !, 제약 조건을 생성 안함
+    @JoinColumn(foreignKey = ForeignKey(ConstraintMode.NO_CONSTRAINT)) // 조인 테이블 제약 조건을 설정 !, 제약 조건을 생성 안함
     open var post: Post = post
         protected set
 }

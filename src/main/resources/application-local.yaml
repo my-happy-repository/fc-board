@@ -17,6 +17,11 @@ spring:
                 format_sql: true
                 ## N + 1 문제 해결을 위하여 해당 설정 넣음 (해당 내용 비교 위하여서는 상세 조회 Tag 검색 조건 넝고 쿼리 나가는 것 비교해보기 !)
                 default_batch_fetch_size: 100
+    cache:
+        type: redis
+        redis:
+            host: localhost
+            port: 6379
 
 #        AWS 는 ServerTimeZone=Seula 지원안하는 듯 .... ?!?! ===> 확인이 필요 !!
 #logging:

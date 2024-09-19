@@ -8,8 +8,8 @@ fun Page<Tag>.toSummaryResponseDto(countLike: (Long) -> Long) =
     PageImpl(
         content.map { it.toSummaryResponseDto(countLike) },
         pageable,
-        totalElements,
-)
+        totalElements
+    )
 
 fun Tag.toSummaryResponseDto(countLike: (Long) -> Long) = PostSummaryResponseDto(
     id = post.id,
@@ -17,5 +17,5 @@ fun Tag.toSummaryResponseDto(countLike: (Long) -> Long) = PostSummaryResponseDto
     createdBy = post.createdBy,
     createdAt = post.createdAt,
     firstTag = name,
-    likedCount = countLike(post.id),
+    likedCount = countLike(post.id)
 )

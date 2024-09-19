@@ -23,7 +23,7 @@ open class Like(
     open val id: Long = 0L
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = ForeignKey(ConstraintMode.NO_CONSTRAINT))  // 조인 테이블 제약 조건을 설정 !, 제약 조건을 생성 안함
+    @JoinColumn(foreignKey = ForeignKey(ConstraintMode.NO_CONSTRAINT)) // 조인 테이블 제약 조건을 설정 !, 제약 조건을 생성 안함
     open var post: Post = post
         protected set
 }

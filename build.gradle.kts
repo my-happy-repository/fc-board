@@ -54,6 +54,8 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3")
+    // TODO - 다른 library 및 다른 버전으로 대체가 가능할까 .. ?! 확인이 필요 !
+    testImplementation("io.kotest.extensions:kotest-extensions-testcontainers:2.0.2")
 }
 
 kapt {

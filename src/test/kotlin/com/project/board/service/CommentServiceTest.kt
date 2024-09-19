@@ -18,6 +18,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
+import org.testcontainers.containers.GenericContainer
 
 @SpringBootTest
 class CommentServiceTest(
@@ -25,6 +26,8 @@ class CommentServiceTest(
     private val commentRepository: CommentRepository,
     private val postRepository: PostRepository,
 ) : BehaviorSpec({
+    val redisContainer = GenericContainer<Nothing>("redis:5.6")
+
     given(name = "댓글 생성 시") {
         val post = postRepository.save(
             Post(

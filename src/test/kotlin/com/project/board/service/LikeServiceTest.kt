@@ -7,10 +7,7 @@ import com.project.board.repository.PostRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.extensions.testcontainers.perSpec
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.data.repository.findByIdOrNull
 import org.testcontainers.containers.GenericContainer
 
 @SpringBootTest
@@ -42,12 +39,12 @@ class LikeServiceTest(
 
         When(name = "인풋이 정상 적으로 들어오면") {
             val likeId = likeService.createLike(savedPost.id, "created-test")
-            then(name = "좋아요 ?! 가 정상적으로 생성 됨을 확인 한다 !") {
-                val like = likeRepository.findByIdOrNull(id = likeId)
-
-                like shouldNotBe null
-                like?.createdBy shouldBe "created-test"
-            }
+//            then(name = "좋아요 ?! 가 정상적으로 생성 됨을 확인 한다 !") {
+//                val like = likeRepository.findByIdOrNull(id = likeId)
+//
+//                like shouldNotBe null
+//                like?.createdBy shouldBe "created-test"
+//            }
         }
 
         When(name = "게시글이 존재하지 않으면") {

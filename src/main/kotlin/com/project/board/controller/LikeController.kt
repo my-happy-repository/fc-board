@@ -15,10 +15,7 @@ class LikeController(
     fun createLikes(
         @PathVariable(name = "postId") postId: Long,
         @RequestParam createdBy: String,
-    ): Long {
-        return likeService.createLike(
-            postId = postId,
-            createdBy = createdBy
-        )
+    ) {
+        likeService.createLike(postId = postId, createdBy = createdBy)
     }
 }

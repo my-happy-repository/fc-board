@@ -12,6 +12,7 @@ import com.project.board.service.dto.CommentDeleteRequestDto
 import com.project.board.service.dto.CommentUpdateRequestDto
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.extensions.testcontainers.perSpec
 import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
@@ -27,6 +28,15 @@ class CommentServiceTest(
     private val postRepository: PostRepository,
 ) : BehaviorSpec({
     val redisContainer = GenericContainer<Nothing>("redis:5.6")
+    beforeSpec {
+        redisContainer.portBindings.add("16379:6379")
+        redisContainer.start()
+        listener(redisContainer.perSpec()) // perSpec 이유는 Spec 단위 마다 실행, Spec 종료 시 레디스도 꺼짐
+    }
+
+    afterSpec {
+        redisContainer.stop()
+    }
 
     given(name = "댓글 생성 시") {
         val post = postRepository.save(

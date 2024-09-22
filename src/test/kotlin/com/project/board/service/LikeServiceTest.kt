@@ -6,10 +6,12 @@ import com.project.board.repository.LikeRepository
 import com.project.board.repository.PostRepository
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.extensions.testcontainers.perSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
+import org.testcontainers.containers.GenericContainer
 
 @SpringBootTest
 class LikeServiceTest(
@@ -17,6 +19,17 @@ class LikeServiceTest(
     private val likeRepository: LikeRepository,
     private val postRepository: PostRepository,
 ) : BehaviorSpec({
+    val redisContainer = GenericContainer<Nothing>("redis:5.6")
+    beforeSpec {
+        redisContainer.portBindings.add("16379:6379")
+        redisContainer.start()
+        listener(redisContainer.perSpec()) // perSpec 이유는 Spec 단위 마다 실행, Spec 종료 시 레디스도 꺼짐
+    }
+
+    afterSpec {
+        redisContainer.stop()
+    }
+
     given(name = "좋아요 생성 시") {
         val savedPost = postRepository.save(
             Post(

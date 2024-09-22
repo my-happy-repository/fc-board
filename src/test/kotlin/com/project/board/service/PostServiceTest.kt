@@ -14,6 +14,7 @@ import com.project.board.service.dto.PostSearchRequestDto
 import com.project.board.service.dto.PostUpdateRequestDto
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.extensions.testcontainers.perSpec
 import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -21,6 +22,7 @@ import io.kotest.matchers.string.shouldContain
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
+import org.testcontainers.containers.GenericContainer
 
 @SpringBootTest
 class PostServiceTest(
@@ -30,7 +32,16 @@ class PostServiceTest(
     private val tagRepository: TagRepository,
     private val likeService: LikeService,
 ) : BehaviorSpec({
+    val redisContainer = GenericContainer<Nothing>("redis:5.6")
+    afterSpec {
+        redisContainer.stop()
+    }
+
     beforeSpec {
+        redisContainer.portBindings.add("16379:6379")
+        redisContainer.start()
+        listener(redisContainer.perSpec()) // perSpec 이유는 Spec 단위 마다 실행, Spec 종료 시 레디스도 꺼짐
+
         postRepository.saveAll(
             listOf(
                 Post(title = "title1", content = "content1", createdBy = "createdBy-1", tags = listOf("tag1", "tag2")),

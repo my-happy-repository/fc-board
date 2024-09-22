@@ -58,7 +58,10 @@ WHERE l1_0.post_id = 1;`
 ### INDEX 를 생성 후 type 이 ref 로 변경이 됨
 `CREATE INDEX idx_post_id on likes(post_id);`
 
-
+### Spring Application 에서 이벤트를 발행/구독 할 수 있는 기능
+#### ApplicationEventPublisher / EventListener
+### 이벤트를 사용하는 이유
+#### 1. 비동기 처리 (빠른 응답), 2. 의존성 줄이기 3. 데이터 싱크 맞추기
 
 
 
